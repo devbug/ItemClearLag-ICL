@@ -85,7 +85,7 @@ publishMods {
         changelogType = "markdown"
         minecraftVersionRange {
             start = project.minecraft_version
-            end = "1.21.5"
+            end = "1.21.8"
         }
         clientRequired = true
         serverRequired = false
@@ -96,7 +96,7 @@ publishMods {
         projectId = "NJcJEXNc"
         minecraftVersionRange {
             start = project.minecraft_version
-            end = "1.21.5"
+            end = "1.21.8"
         }
     }
 

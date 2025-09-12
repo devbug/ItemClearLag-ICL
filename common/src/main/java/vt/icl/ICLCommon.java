@@ -309,7 +309,7 @@ public class ICLCommon {
         }
         RegistryEntry<SoundEvent> registryEntry = RegistryEntry.of(SoundEvent.of(sound));
         player.networkHandler.send(new PlaySoundS2CPacket(registryEntry,
-                SoundCategory.PLAYERS, vec3d.getX(), vec3d.getY(), vec3d.getZ(), 1, 1, 1), (PacketCallbacks)null);
+                SoundCategory.PLAYERS, vec3d.getX(), vec3d.getY(), vec3d.getZ(), 1, 1, 1), null);
     }
 
     private static boolean permissionCheckforCancel(ServerCommandSource source) {

@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -35,15 +36,10 @@ public class IclCommand {
     };
 
     private static final SuggestionProvider<ServerCommandSource> SOUNDS = (context, builder) -> {
-        try {
-            AVAILABLE_SOUNDS.getSuggestions(context, builder).get().getList().forEach(suggestion -> {
-                String sound = suggestion.getText();
-                String[] split = sound.split(":");
-                builder.suggest(split[split.length - 1]);
-            });
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+        context.getSource().getRegistryManager().getOrThrow(RegistryKeys.SOUND_EVENT)
+                .forEach(se ->
+                        builder.suggest(se.id().getPath())
+                );
         return builder.buildFuture();
     };
 
