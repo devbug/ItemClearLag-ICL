@@ -1,7 +1,9 @@
 package vt.icl.config;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Configuration {
     public long Delay;
@@ -22,6 +24,15 @@ public class Configuration {
     public boolean preserveNoDespawnItems;
     public boolean preserveNoPickupItems;
     public boolean UsePermissionsApi;
+    
+    // Item filtering options
+    public boolean preserveEnchantedItems;
+    public boolean preserveModItems;
+    public boolean preserveRareItems;
+    public List<String> exemptItems;
+    public boolean targetItemsOnly;
+    public List<String> targetItems;
+    public List<String> excludedDimensions;
 
     public Configuration() {
         this.Delay = 80;
@@ -42,6 +53,15 @@ public class Configuration {
         this.preserveNoDespawnItems = true;
         this.preserveNoPickupItems = true;
         this.UsePermissionsApi = false;
+        
+        // Item filtering defaults
+        this.preserveEnchantedItems = false;
+        this.preserveModItems = false;
+        this.preserveRareItems = false;
+        this.exemptItems = new ArrayList<>();
+        this.targetItemsOnly = false;
+        this.targetItems = new ArrayList<>();
+        this.excludedDimensions = new ArrayList<>();
     }
 
     public void save() {
@@ -68,6 +88,10 @@ public class Configuration {
         map.put("preserveNoDespawnItems", boolean.class);
         map.put("preserveNoPickupItems", boolean.class);
         map.put("UsePermissionsApi", boolean.class);
+        map.put("preserveEnchantedItems", boolean.class);
+        map.put("preserveModItems", boolean.class);
+        map.put("preserveRareItems", boolean.class);
+        map.put("targetItemsOnly", boolean.class);
         return map;
     }
 
@@ -90,6 +114,13 @@ public class Configuration {
         this.preserveNoDespawnItems = configuration.preserveNoDespawnItems;
         this.preserveNoPickupItems = configuration.preserveNoPickupItems;
         this.UsePermissionsApi = configuration.UsePermissionsApi;
+        this.preserveEnchantedItems = configuration.preserveEnchantedItems;
+        this.preserveModItems = configuration.preserveModItems;
+        this.preserveRareItems = configuration.preserveRareItems;
+        this.exemptItems = configuration.exemptItems != null ? new ArrayList<>(configuration.exemptItems) : new ArrayList<>();
+        this.targetItemsOnly = configuration.targetItemsOnly;
+        this.targetItems = configuration.targetItems != null ? new ArrayList<>(configuration.targetItems) : new ArrayList<>();
+        this.excludedDimensions = configuration.excludedDimensions != null ? new ArrayList<>(configuration.excludedDimensions) : new ArrayList<>();
     }
 
     public void set(String key, String value) {
@@ -148,6 +179,18 @@ public class Configuration {
             case "UsePermissionsApi":
                 this.UsePermissionsApi = Boolean.parseBoolean(value);
                 break;
+            case "preserveEnchantedItems":
+                this.preserveEnchantedItems = Boolean.parseBoolean(value);
+                break;
+            case "preserveModItems":
+                this.preserveModItems = Boolean.parseBoolean(value);
+                break;
+            case "preserveRareItems":
+                this.preserveRareItems = Boolean.parseBoolean(value);
+                break;
+            case "targetItemsOnly":
+                this.targetItemsOnly = Boolean.parseBoolean(value);
+                break;
         }
         save();
     }
@@ -172,6 +215,13 @@ public class Configuration {
             case "preserveNoDespawnItems" -> String.valueOf(this.preserveNoDespawnItems);
             case "preserveNoPickupItems" -> String.valueOf(this.preserveNoPickupItems);
             case "UsePermissionsApi" -> String.valueOf(this.UsePermissionsApi);
+            case "preserveEnchantedItems" -> String.valueOf(this.preserveEnchantedItems);
+            case "preserveModItems" -> String.valueOf(this.preserveModItems);
+            case "preserveRareItems" -> String.valueOf(this.preserveRareItems);
+            case "targetItemsOnly" -> String.valueOf(this.targetItemsOnly);
+            case "exemptItems" -> this.exemptItems != null ? String.join(", ", this.exemptItems) : "[]";
+            case "targetItems" -> this.targetItems != null ? String.join(", ", this.targetItems) : "[]";
+            case "excludedDimensions" -> this.excludedDimensions != null ? String.join(", ", this.excludedDimensions) : "[]";
             default -> null;
         };
     }

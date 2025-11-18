@@ -1,0 +1,66 @@
+{
+  "Delay": 80,
+  "NotificationDelay": 15,
+  "NotificationStart": 60,
+  "NotificationTimes": 4,
+  "CountdownStart": 5,
+  "doNotificationCountdown": true,
+  "doShowNotification": true,
+  "doNotificationSound": true,
+  "doLastNotificationSound": false,
+  "NotificationSound": "block.note_block.harp",
+  "LastNotificationSound": "block.note_block.harp",
+  "NotificationLang": "ko_kr",
+  "NotificationColor": "RED",
+  "RequireOp": true,
+  "RequireOpCancel": false,
+  "preserveNoDespawnItems": true,
+  "preserveNoPickupItems": true,
+  "UsePermissionsApi": false,
+  
+  "_comment_filtering": "=== 고급 아이템 필터링 옵션 ===",
+  
+  "preserveEnchantedItems": false,
+  "preserveModItems": false,
+  "preserveRareItems": false,
+  "targetItemsOnly": false,
+  
+  "_comment_exemptItems": "화이트리스트: 이 목록의 아이템은 절대 정리되지 않습니다",
+  "exemptItems": [
+    "minecraft:diamond",
+    "minecraft:diamond_ore",
+    "minecraft:deepslate_diamond_ore",
+    "minecraft:diamond_block",
+    "minecraft:ancient_debris",
+    "minecraft:netherite_scrap",
+    "minecraft:netherite_ingot",
+    "minecraft:netherite_block",
+    "minecraft:emerald",
+    "minecraft:emerald_ore",
+    "minecraft:deepslate_emerald_ore",
+    "minecraft:emerald_block",
+    "minecraft:gold_ingot",
+    "minecraft:gold_block",
+    "minecraft:iron_ingot",
+    "minecraft:iron_block",
+    "minecraft:elytra",
+    "minecraft:dragon_egg",
+    "minecraft:nether_star",
+    "minecraft:shulker_box",
+    "minecraft:shulker_shell"
+  ],
+  
+  "_comment_targetItems": "블랙리스트: targetItemsOnly=true일 때 이 목록의 아이템만 정리됩니다",
+  "targetItems": [
+    "minecraft:cobblestone",
+    "minecraft:dirt",
+    "minecraft:gravel",
+    "minecraft:sand"
+  ],
+  
+  "_comment_excludedDimensions": "이 목록의 차원은 아이템 정리에서 제외됩니다",
+  "excludedDimensions": [
+    "minecraft:the_nether",
+    "minecraft:the_end"
+  ]
+}

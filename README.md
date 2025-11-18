@@ -45,6 +45,19 @@ Configuration values can be changed using the `/icl config set` command. Here ar
 - `preserveNoDespawnItems`: Whether to preserve items that are set to never despawn.
 - `preserveNoPickupItems`: Whether to preserve items that are set to not be picked up.
 
+### Advanced Item Filtering
+
+- `preserveEnchantedItems`: Whether to preserve items with enchantments.
+- `preserveModItems`: Whether to preserve items from mods (non-vanilla items).
+- `preserveRareItems`: Whether to preserve items with RARE or EPIC rarity (e.g., netherite **gear**, dragon egg, enchanted golden apples).
+  - **Note**: Resource items like diamonds, netherite ingots, emeralds, and ancient debris have COMMON rarity and are NOT protected by this setting. Add them to `exemptItems` instead.
+- `targetItemsOnly`: Enable blacklist mode. If true, only items in `targetItems` will be cleared.
+- `exemptItems`: List of item IDs that should never be cleared (whitelist). Edit in config file. Example: `["minecraft:diamond", "minecraft:netherite_ingot"]`
+- `targetItems`: List of item IDs to clear when `targetItemsOnly` is true (blacklist). Edit in config file.
+- `excludedDimensions`: List of dimension IDs to exclude from item clearing. Edit in config file. Example: `["minecraft:the_nether", "minecraft:the_end"]`
+
+**Note**: List-type configurations (`exemptItems`, `targetItems`, `excludedDimensions`) must be edited directly in the config file (`config/Icl/ICL.json`), not via commands.
+
 ## Permissions
 
 ICL has a fabric-permissions integration, which allows you to set permissions for each command. Here are the permissions:

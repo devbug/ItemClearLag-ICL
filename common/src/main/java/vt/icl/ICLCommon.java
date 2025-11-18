@@ -1,9 +1,13 @@
 package vt.icl;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketCallbacks;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
@@ -15,6 +19,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.TypeFilter;
 import net.minecraft.util.math.Vec3d;
 import org.slf4j.Logger;
@@ -189,7 +194,18 @@ public class ICLCommon {
         }
         int count = 0;
         for (var world : server.getWorlds()) {
+            // Check if this dimension should be excluded
+            String dimensionId = world.getRegistryKey().getValue().toString();
+            if (ICLCommon.config.excludedDimensions != null && ICLCommon.config.excludedDimensions.contains(dimensionId)) {
+                continue;
+            }
+            
             for (var entity : world.getEntitiesByType(TypeFilter.instanceOf(ItemEntity.class), Entity::isAlive)) {
+                ItemStack stack = entity.getStack();
+                Identifier itemId = Registries.ITEM.getId(stack.getItem());
+                String itemIdString = itemId.toString();
+                
+                // Existing filters
                 if (ICLCommon.config.preserveNoPickupItems) {
                     ItemEntityAccessor accessor = (ItemEntityAccessor) entity;
                     if (accessor.getPickupDelay() == Short.MAX_VALUE) {
@@ -201,7 +217,43 @@ public class ICLCommon {
                         continue;
                     }
                 }
-                count += entity.getStack().getCount();
+                
+                // Target items only mode (blacklist)
+                if (ICLCommon.config.targetItemsOnly) {
+                    if (ICLCommon.config.targetItems == null || !ICLCommon.config.targetItems.contains(itemIdString)) {
+                        continue; // Skip items not in the target list
+                    }
+                } else {
+                    // Whitelist mode - exempt items from deletion
+                    if (ICLCommon.config.exemptItems != null && ICLCommon.config.exemptItems.contains(itemIdString)) {
+                        continue;
+                    }
+                }
+                
+                // Preserve enchanted items
+                if (ICLCommon.config.preserveEnchantedItems) {
+                    ItemEnchantmentsComponent enchantments = stack.get(DataComponentTypes.ENCHANTMENTS);
+                    if (enchantments != null && !enchantments.isEmpty()) {
+                        continue;
+                    }
+                }
+                
+                // Preserve mod items (non-vanilla)
+                if (ICLCommon.config.preserveModItems) {
+                    if (!itemId.getNamespace().equals("minecraft")) {
+                        continue;
+                    }
+                }
+                
+                // Preserve rare/epic items
+                if (ICLCommon.config.preserveRareItems) {
+                    Rarity rarity = stack.getRarity();
+                    if (rarity == Rarity.RARE || rarity == Rarity.EPIC) {
+                        continue;
+                    }
+                }
+                
+                count += stack.getCount();
                 entity.remove(Entity.RemovalReason.DISCARDED);
             }
         }
