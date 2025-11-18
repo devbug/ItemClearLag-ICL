@@ -268,7 +268,9 @@ public class ICLCommon {
     public static void reloadIcl() {
         ICLCommon.TIMER.cancel();
         ICLCommon.TIMER = new Timer(ICLCommon.MOD_ID.toUpperCase());
+        ConfigManager.loadConfig();  // Force reload from file
         ICLCommon.config = ConfigManager.getConfig();
+        ICLCommon.translations = IclTranslationManager.loadTranslation(config.NotificationLang);
         if (ICLCommon.config.Delay > 0) {
             doItemClean(ICLCommon.server);
             if (ICLCommon.config.doShowNotification) {
@@ -289,7 +291,9 @@ public class ICLCommon {
             ICLCommon.TIMER.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    ConfigManager.loadConfig();  // Force reload from file
                     ICLCommon.config = ConfigManager.getConfig();
+                    ICLCommon.translations = IclTranslationManager.loadTranslation(config.NotificationLang);
                     if (ICLCommon.config.Delay > 0) {
                         doItemClean(ICLCommon.server);
                         if (ICLCommon.config.doShowNotification) {
@@ -304,7 +308,9 @@ public class ICLCommon {
                 }
             }, tempDelay * 1000L);
         } else {
+            ConfigManager.loadConfig();  // Force reload from file
             ICLCommon.config = ConfigManager.getConfig();
+            ICLCommon.translations = IclTranslationManager.loadTranslation(config.NotificationLang);
             if (ICLCommon.config.Delay > 0) {
                 doItemClean(ICLCommon.server);
                 if (ICLCommon.config.doShowNotification) {
