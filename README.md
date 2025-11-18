@@ -48,7 +48,7 @@ Configuration values can be changed using the `/icl config set` command. Here ar
 ### Advanced Item Filtering
 
 - `preserveEnchantedItems`: Whether to preserve items with enchantments.
-- `preserveModItems`: Whether to preserve items from mods (non-vanilla items).
+- `preserveModItems`: Whether to preserve non-block items from mods (non-vanilla items). Mod blocks will still be cleared, but mod tools, weapons, and other non-block items are preserved.
 - `preserveRareItems`: Whether to preserve items with RARE or EPIC rarity (e.g., netherite **gear**, dragon egg, enchanted golden apples).
   - **Note**: Resource items like diamonds, netherite ingots, emeralds, and ancient debris have COMMON rarity and are NOT protected by this setting. Add them to `exemptItems` instead.
 - `targetItemsOnly`: Enable blacklist mode. If true, only items in `targetItems` will be cleared.

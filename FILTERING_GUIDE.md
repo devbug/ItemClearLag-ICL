@@ -84,6 +84,30 @@ List 타입 설정은 `config/Icl/ICL.json` 파일을 직접 수정해야 합니
 }
 ```
 
+### 예시 5: 희귀한 아이템 보호 (추천 설정)
+
+```json
+{
+  "preserveEnchantedItems": true,
+  "preserveModItems": true,
+  "preserveRareItems": true,
+  "exemptItems": [
+    "minecraft:diamond",
+    "minecraft:diamond_ore",
+    "minecraft:emerald",
+    "minecraft:netherite_scrap",
+    "minecraft:netherite_ingot",
+    "minecraft:ancient_debris"
+  ]
+}
+```
+
+**결과**: 
+- **정리**: 모든 블록 (바닐라 + 모드), 바닐라 일반 아이템 (썩은 고기, 화살 등)
+- **보존**: 인챈트된 아이템, RARE/EPIC 아이템, 모드 비블록 아이템 (도구, 무기 등), 화이트리스트 자원
+
+**참고**: `preserveModItems`는 모드 블록은 정리하되, 모드 도구/무기/아이템은 보호합니다.
+
 ## 희귀도 시스템
 
 ⚠️ **중요**: 마인크래프트의 희귀도(Rarity)와 아이템의 가치는 다릅니다!

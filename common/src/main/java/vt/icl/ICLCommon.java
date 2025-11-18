@@ -4,6 +4,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketCallbacks;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
@@ -238,10 +239,10 @@ public class ICLCommon {
                     }
                 }
                 
-                // Preserve mod items (non-vanilla)
+                // Preserve mod items (non-vanilla, non-block only)
                 if (ICLCommon.config.preserveModItems) {
-                    if (!itemId.getNamespace().equals("minecraft")) {
-                        continue;
+                    if (!itemId.getNamespace().equals("minecraft") && !(stack.getItem() instanceof BlockItem)) {
+                        continue;  // Preserve mod non-block items only
                     }
                 }
                 

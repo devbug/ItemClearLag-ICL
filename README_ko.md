@@ -48,7 +48,7 @@ ICL의 메인 명령어는 `/icl`이며, 다음과 같은 하위 명령어가 �
 ### 고급 아이템 필터링
 
 - `preserveEnchantedItems`: 인챈트된 아이템 보존 여부.
-- `preserveModItems`: 모드 아이템(바닐라가 아닌 아이템) 보존 여부.
+- `preserveModItems`: 모드의 비블록 아이템 보존 여부. 모드 블록은 정리되지만, 모드 도구, 무기 등 비블록 아이템은 보존됩니다.
 - `preserveRareItems`: RARE 또는 EPIC 희귀도 아이템 보존 여부 (예: 네더라이트 **장비**, 드래곤 알, 인챈트된 황금 사과).
   - **주의**: 다이아몬드, 네더라이트 주괴, 에메랄드, 고대 잔해 같은 자원 아이템은 COMMON 희귀도를 가지며 이 설정으로 보호되지 않습니다. 대신 `exemptItems`에 추가하세요.
 - `targetItemsOnly`: 블랙리스트 모드 활성화. true일 경우 `targetItems`에 있는 아이템만 정리됩니다.
